@@ -10,8 +10,8 @@ var app = (function(){
 		self.correctionVelocity = 10;
 		self.comfortZone 	= 10;
 		self.keepUpFraction = 8;
-		self.topSpeed		= 0.1;
-		self.numOfBoids 	= 300;
+		self.topSpeed		= 0.5;
+		self.numOfBoids 	= 1000;
 		self.boids 			= [];
 	}
 
@@ -33,12 +33,16 @@ var app = (function(){
     };
 
     App.prototype.update = function(){
-		this.moveBoids();
+		for(let i =0; i < this.boids.length; i++){
+            this.boids[i].Update(this.boids);
+        }
 	};
 	
 	App.prototype.draw = function(){
 		this.context.clearRect(0, 0, canvas.width, canvas.height);
-		this.drawBoids();
+	   for(let i =0; i < this.boids.length; i++){
+            this.boids[i].Draw(this.context);
+        }
 	};
 
     App.prototype.createBoids = function(){
@@ -61,7 +65,6 @@ var app = (function(){
     		this.boids[i].vel = V2.AddMany([this.boids[i].vel, v1, v2, v3, v4]);
     		this.LimitVelocity(this.boids[i]);
     		this.boids[i].pos = V2.Add(this.boids[i].pos, this.boids[i].vel);
-
     	}
     }
     App.prototype.drawBoids = function(){
@@ -140,7 +143,7 @@ var app = (function(){
     }
 
     App.prototype.LimitVelocity = function(b){
-    	if(V2.Magnitude(b) > this.topSpeed){
+    	if(V2.Magnitude(b.vel) > this.topSpeed){
     		b.vel = V2.Multiply(V2.Divide(b.vel, V2.Magnitude(b.vel)), this.topSpeed);
     	}
     }

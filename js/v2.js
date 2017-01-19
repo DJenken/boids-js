@@ -50,8 +50,8 @@ class V2{
 			console.error("Cannot divide by 0");
 		}
 		var result 	= new V2(0,0);
-		result.x 	= Math.floor(v.x / scalar);
-		result.y 	= Math.floor(v.y / scalar);
+		result.x 	= v.x / scalar;
+		result.y 	= v.y / scalar;
 		return result;	
 	}
 
@@ -63,9 +63,24 @@ class V2{
 	}
 
 	static Magnitude(v){
-		var xSqr 	= v.x * v.x;
-		var ySqr 	= v.y * v.y;
-		var result 	= Math.sqrt(V2.Dot(v,v));
+		var result 	= Math.sqrt(v.x * v.x + v.y * v.y);
 		return result;
+	}
+
+	static Distance(v1, v2){
+		let deltaX = v1.x - v2.x;
+		let deltaY = v1.y - v2.y;
+		let result = Math.sqrt((deltaX * deltaX) + (deltaY * deltaY));
+		return result;
+	}
+
+	static Random(scalar){
+		let randomVector = new V2(Math.random() * scalar, Math.random() * scalar);
+		if(scalar == undefined || scalar == null || scalar == 0){
+			scalar = 1;
+		}
+		randomVector = V2.Divide(randomVector, V2.Magnitude(randomVector));
+		randomVector = V2.Multiply(randomVector, scalar);
+		return randomVector;
 	}
 }
