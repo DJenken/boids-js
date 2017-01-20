@@ -75,7 +75,7 @@ class V2{
 	}
 
 	static Random(scalar){
-		let randomVector = new V2(Math.random() * scalar, Math.random() * scalar);
+		let randomVector = new V2((Math.random() * 2 - 1), (Math.random() * 2 - 1));
 		if(scalar == undefined || scalar == null || scalar == 0){
 			scalar = 1;
 		}

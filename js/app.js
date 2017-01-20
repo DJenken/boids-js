@@ -7,11 +7,7 @@ var app = (function(){
 		self.context 		= self.canvas.getContext("2d");
 		self.fps 			= 30;
 		
-		self.correctionVelocity = 10;
-		self.comfortZone 	= 10;
-		self.keepUpFraction = 8;
-		self.topSpeed		= 0.5;
-		self.numOfBoids 	= 300;
+		self.numOfBoids 	= 400;
 		self.boids 			= [];
 	}
 
