@@ -1,10 +1,10 @@
 class Boid {
 	constructor(px,py){		
 		this.friendZone			= 200;
-		this.comfortZone 		= 100;
-		this.correctionVelocity = 10;
-		this.keepUpFraction		= 8;
-		this.topSpeed			= 1;
+		this.comfortZone 		= 10;
+		this.correctionVelocity = 5;
+		this.keepUpFraction		= 16;
+		this.topSpeed			= 3;
 		this.flock 				= [];
 
 		this.vel 			= V2.Random(this.topSpeed);
@@ -36,10 +36,10 @@ class Boid {
 
 	Cohere(){
 		//Perceived center
-    	let pc = new V2(0,0);
+    	var pc = new V2(0,0);
 		
 		if(this.flock.length > 1){
-	    	for(let i in this.flock){
+	    	for(var i in this.flock){
 	    		if(this.flock[i] != this){
 	    			pc = V2.Add(pc, this.flock[i].pos);
 	    		}
@@ -51,17 +51,17 @@ class Boid {
     	}
     	
     	
-    	let result = V2.Divide(V2.Subtract(pc, this.pos), 100);
+    	var result = V2.Divide(V2.Subtract(pc, this.pos), 100);
 
 		return result;
 	}
 
 	Separate(){
-		let result = new V2(0,0);
+		var result = new V2(0,0);
 
-    	for(let i in this.flock){
+    	for(var i in this.flock){
     		if(this.flock[i] != this){
-    			if(V2.Magnitude(this.flock[i].pos, this.pos) < this.comfortZone){
+    			if(V2.Distance(this.flock[i].pos, this.pos) < this.comfortZone){
     				result = V2.Subtract(result, V2.Subtract(this.flock[i].pos, this.pos));
     			}
     		}
@@ -72,11 +72,11 @@ class Boid {
 
 	Align(){
 		//Perceived velocity
-    	let pv = new V2(0,0);
+    	var pv = new V2(0,0);
 		
 		if(this.flock.length > 1){
 	    	
-	    	for(let i in this.flock){
+	    	for(var i in this.flock){
 	    		if(this.flock[i] != this){
 	    			pv = V2.Add(pv, this.flock[i].vel);
 	    		}
@@ -87,7 +87,7 @@ class Boid {
     		pv = this.vel;
     	}
 
-    	let result = V2.Divide(V2.Subtract(pv, this.vel), this.keepUpFraction);
+    	var result = V2.Divide(V2.Subtract(pv, this.vel), this.keepUpFraction);
 
 		return result;
 	}
